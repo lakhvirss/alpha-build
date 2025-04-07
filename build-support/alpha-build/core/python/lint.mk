@@ -67,3 +67,15 @@ pydocstyle:
 	$(eval targets := $(onpy))
 	if $(call lang,$(targets),$(REGEX_PY)); then  \
   	$(python) -m pydocstyle $(PYDOCSTYLE_FLAGS) $(targets); fi
+
+.PHONY: ruff-format-check
+ruff-format-check:
+	$(eval targets := $(onpy))
+	if $(call lang,$(targets),$(REGEX_PY)); then  \
+	$(python) -m ruff format --check --diff $(RUFF_FLAGS) $(targets); fi
+
+.PHONY: ruff-lint-check
+ruff-lint-check:
+	$(eval targets := $(onpy))
+	if $(call lang,$(targets),$(REGEX_PY)); then  \
+	$(python) -m ruff check $(RUFF_FLAGS) $(targets); fi

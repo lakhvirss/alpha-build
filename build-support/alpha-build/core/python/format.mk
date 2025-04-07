@@ -40,3 +40,15 @@ pyupgrade:
 	$(eval targets := $(onpy))
 	if $(call lang,$(targets),$(REGEX_PY)); then  \
 	find $(targets) -type f -regex $(REGEX_PY) -print0 | $(gnu_xargs) -0 $(python) -m pyupgrade $(PYUPGRADE_FLAGS) ; fi
+
+.PHONY: ruff-format
+ruff-format:
+	$(eval targets := $(onpy))
+	if $(call lang,$(targets),$(REGEX_PY)); then  \
+	$(python) -m ruff format $(RUFF_FLAGS) $(targets); fi
+
+.PHONY: ruff-lint-fix
+ruff-lint-fix:
+	$(eval targets := $(onpy))
+	if $(call lang,$(targets),$(REGEX_PY)); then  \
+	$(python) -m ruff check --fix $(RUFF_FLAGS) $(targets); fi
